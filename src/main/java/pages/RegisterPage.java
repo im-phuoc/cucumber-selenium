@@ -169,15 +169,24 @@ public class RegisterPage extends BasePage {
         enterPassword(password);
         clickRegisterButton();
         
+        // Cho phép toast có thời gian xuất hiện
         try {
-            // Wait a bit for toast to appear
-            Thread.sleep(500);
-            return toastNotificationComponent.isToastDisplayed() && 
-                   toastNotificationComponent.isSuccessToast() &&
-                   toastNotificationComponent.containsMessage("Registration successful");
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             logger.error("Interrupted while waiting for toast: {}", e.getMessage());
-            return false;
         }
+        
+        // Kiểm tra toast message
+        if (toastNotificationComponent.isToastDisplayed()) {
+            String message = toastNotificationComponent.getToastMessage();
+            boolean isSuccess = toastNotificationComponent.isSuccessToast() && 
+                              (message != null && message.contains("Registration successful"));
+            
+            logger.info("Registration attempt result - Success: {}, Message: {}", isSuccess, message);
+            return isSuccess;
+        }
+        
+        logger.warn("No toast message displayed after registration attempt");
+        return false;
     }
 }

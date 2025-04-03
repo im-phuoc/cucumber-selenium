@@ -8,14 +8,9 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"stepDefinitions", "hooks"},
-        plugin = {
-                "pretty",
-                "html:target/cucumber-reports/cucumber-pretty.html",
-                "json:target/cucumber-reports/CucumberTestReport.json",
-                "junit:target/cucumber-reports/CucumberTestReport.xml"
-        },
-        monochrome = true,
-        tags = "@login"
+        plugin = {"pretty", "json:target/cucumber-reports/Cucumber.json"},
+        monochrome = true
+//        tags = "@invalid-input or @invalid-credentials"
 )
 public class TestRunner {
 } 
